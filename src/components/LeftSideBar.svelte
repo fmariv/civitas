@@ -24,23 +24,6 @@
         elem.className = classes.join(' ');
     }
 
-    function flyToCity() {
-        console.log('fly')
-
-        /*
-        const { getMap } = getContext();
-        const map = getMap();
-
-        map.flyTo({
-            center: [
-            -74.5 + (Math.random() - 0.5) * 10,
-            40 + (Math.random() - 0.5) * 10
-            ],
-            essential: true // this animation is considered essential with respect to prefers-reduced-motion
-        });
-        */
-    }
-
     onMount(async() => {
         toggleSidebar()
     });
@@ -49,7 +32,7 @@
   
     <div id="left" class="sidebar flex-center left collapsed">
         <div class="sidebar-content rounded-rect flex-center">
-            <button on:click={flyToCity}>
+            <button id="fly-button">
                 Give me a city!
             </button>
             <div class="sidebar-toggle rounded-rect left" on:click={toggleSidebar}>
