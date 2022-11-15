@@ -6,61 +6,58 @@
 
   let map;
   let container;
-  let totalCount;
-  let randomCity;
-  let newCity;
-  let newCityName;
-  let newCityLat;
-  let newCityLong;
 
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
 
-  function getNewCity() {
-    axios.get('http://geodb-free-service.wirefreethought.com/v1/geo/cities?hateoasMode=off')
-      .then(function (response) {
-        totalCount = response.data.metadata.totalCount - 1
-        randomCity = getRandomInt(totalCount)
-        axios.get(`http://geodb-free-service.wirefreethought.com/v1/geo/cities?limit=1&offset=${randomCity}&hateoasMode=off`)
-            .then(function (response_) {
-                newCity = response_.data.data[0]
-                newCityName = newCity.name
-                newCityLat = newCity.latitude
-                newCityLong = newCity.longitude;
-                console.log(newCityName, newCityLat, newCityLong)
-
-                return (newCityName, newCityLat, newCityLong)
-            })
-            .catch(function (error_) {
-                // handle error
-                console.log(error_);
-            })
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
+  async function getTotalCitiesCount() {
+    const response = await axios.get('http://geodb-free-service.wirefreethought.com/v1/geo/cities?hateoasMode=off')
+    
+    return response.data.metadata.totalCount - 1
   }
 
-  function flyToNewCity() {
-    // Fly to a random location by offsetting the point -74.50, 40
-    // by up to 5 degrees.
-    newCityName, newCityLat, newCityLong = getNewCity()
+  async function getNewCity(randomCity) {
+    const response = await axios.get(`http://geodb-free-service.wirefreethought.com/v1/geo/cities?limit=1&offset=${randomCity}&hateoasMode=off`)
 
+    return response.data.data[0]
+  }
+
+  async function getNewCityData() {
+    let totalCitiesCount = await getTotalCitiesCount()
+    let randomCity = getRandomInt(totalCitiesCount)
+
+    return await getNewCity(randomCity)
+  }
+
+  async function flyToNewCity() {
+    let city = await getNewCityData()
+    let cityName = city.name;
+    let cityLat = city.latitude;
+    let cityLong = city.longitude;
+    
     map.flyTo({
         center: [
-          newCityLat,
-          newCityLong
+          cityLong,
+          cityLat
         ],
-        essential: true // this animation is considered essential with respect to prefers-reduced-motion
+        zoom: 13,
+        bearing: 0,
+        speed: 2,
+        curve: 1,
+        easing: function (t) {
+          return t;
+        },
+        essential: true
     });
+    
   }
 
   onMount(async() => {
     
     map = new Map({
         container: container,
-        style: 'https://geoserveis.icgc.cat/contextmaps/icgc_mapa_estandard.json',
+        style: 'https://api.maptiler.com/maps/streets/style.json?key=hD7P9qjaQIIuR4Ct1buL',
         zoom: 13,
         maxZoom: 14,
         center: [-105.270546, 40.014984]
