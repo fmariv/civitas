@@ -25,7 +25,6 @@
 </script>
 
 <div id="map" bind:this={container}></div>
-
 <style>
 #map {
   position: absolute;
