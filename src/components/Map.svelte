@@ -5,8 +5,8 @@
   import 'maplibre-gl/dist/maplibre-gl.css';
 
   const { env } = _process;
-  const maptilerApiKey = env.API_KEY;
-  const rapidapiApiKey = env.RAPIDAPI_KEY;   // TODO not working
+  const maptilerApiKey = env.MAPTILER_KEY;
+  const rapidapiApiKey = env.RAPIDAPI_KEY;
 
   let map;
   let container;
@@ -14,6 +14,12 @@
 
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
+  }
+
+  function wait(milliseconds){
+    return new Promise(resolve => {
+        setTimeout(resolve, milliseconds);
+    });
   }
 
   async function getTotalCitiesCount() {
@@ -27,7 +33,7 @@
     };
     const response = await axios.request(options)
     
-    return response.metadata.totalCount - 1
+    return response.data.metadata.totalCount - 1
   }
 
   async function getNewCity(randomCity) {
@@ -41,12 +47,13 @@
     };
     const response = await axios.request(options)
 
-    return response.data
+    return response.data.data[0]
   }
 
   async function getNewCityData() {
-    let totalCitiesCount = await getTotalCitiesCount()
-    let randomCity = getRandomInt(totalCitiesCount)
+    let totalCitiesCount = await getTotalCitiesCount();
+    await wait(1500);   // Wait 1,5 seconds to avoid restrictions by RapidAPI requests
+    let randomCity = getRandomInt(totalCitiesCount);
 
     return await getNewCity(randomCity)
   }
@@ -54,6 +61,7 @@
   async function flyToNewCity() {
     let city = await getNewCityData()
     cityName = city.name;   // TODO store
+    console.log(cityName);
     let cityLat = city.latitude;
     let cityLong = city.longitude;
     
@@ -79,8 +87,8 @@
 
   onMount(async() => {
 
-    if (!maptilerApiKey) {
-      throw new Error("You need to configure env API_KEY first!");
+    if (!maptilerApiKey || !rapidapiApiKey) {
+      throw new Error("You need to configure env keys first!");
     }
     
     map = new Map({

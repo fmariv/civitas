@@ -44,7 +44,8 @@ export default {
 		replace({
       _process: JSON.stringify({
         env: {
-          API_KEY: process.env.API_KEY
+          MAPTILER_KEY: process.env.MAPTILER_KEY,
+		  RAPIDAPI_KEY: process.env.RAPIDAPI_KEY
         }
       }),
     }),
