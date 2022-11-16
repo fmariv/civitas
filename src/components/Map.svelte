@@ -73,7 +73,7 @@
 
   async function flyToNewCity() {
     let city = await getNewCityData()
-    cityName = city.name;
+    let cityName = city.name;
     cityNameStore.set(cityName);
     let cityLat = city.latitude;
     let cityLong = city.longitude;
