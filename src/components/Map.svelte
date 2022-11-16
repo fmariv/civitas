@@ -2,6 +2,7 @@
   import { onMount, onDestroy } from 'svelte'
   import { Map } from 'maplibre-gl';
   import axios from 'axios';
+  import { citiesTotalCountStore, cityNameStore } from '../stores';
   import 'maplibre-gl/dist/maplibre-gl.css';
 
   const { env } = _process;
@@ -10,7 +11,7 @@
 
   let map;
   let container;
-  let cityName = '';   // TODO store
+  let citiesTotalCount;
 
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -22,7 +23,13 @@
     });
   }
 
-  async function getTotalCitiesCount() {
+  function subscribeCitiesTotalCount() {
+    citiesTotalCountStore.subscribe(value => {
+      citiesTotalCount = value
+    })
+  }
+
+  async function getCitiesTotalCount() {
     const options = {
       method: 'GET',
       url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities',
@@ -32,11 +39,15 @@
       }
     };
     const response = await axios.request(options)
-    
-    return response.data.metadata.totalCount - 1
+    // TODO put the wait function here and block the button 
+    // with a store
+    //  await wait(1500);   // Wait 1,5 seconds to avoid restrictions by RapidAPI requests
+
+    citiesTotalCountStore.set(response.data.metadata.totalCount - 1)
   }
 
   async function getNewCity(randomCity) {
+    await wait(1500);   // Wait 1,5 seconds to avoid restrictions by RapidAPI requests
     const options = {
       method: 'GET',
       url: `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?offset=${randomCity}&limit=1`,
@@ -51,17 +62,19 @@
   }
 
   async function getNewCityData() {
-    let totalCitiesCount = await getTotalCitiesCount();
-    await wait(1500);   // Wait 1,5 seconds to avoid restrictions by RapidAPI requests
-    let randomCity = getRandomInt(totalCitiesCount);
+    if (!citiesTotalCount) {
+      await getCitiesTotalCount();
+      subscribeCitiesTotalCount();
+    };
+    let randomCity = getRandomInt(citiesTotalCount);
 
     return await getNewCity(randomCity)
   }
 
   async function flyToNewCity() {
     let city = await getNewCityData()
-    cityName = city.name;   // TODO store
-    console.log(cityName);
+    cityName = city.name;
+    cityNameStore.set(cityName);
     let cityLat = city.latitude;
     let cityLong = city.longitude;
     
