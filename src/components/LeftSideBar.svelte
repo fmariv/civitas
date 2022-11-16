@@ -13,6 +13,10 @@
     import Button, { Label, Icon } from '@smui/button';
     import 'maplibre-gl/dist/maplibre-gl.css';
 
+    function openMyWebPage() {
+        window.open('http://www.franmartin.es/')
+    }
+
     function toggleSidebar() {
         var elem = document.getElementById('left');
         var classes = elem.className.split(' ');
@@ -47,7 +51,7 @@
                 <Label>Give me a city!</Label>
             </Button>
             <!-- Make as typography -->
-            <Button>
+            <Button on:click={openMyWebPage}>
                 <Label>Made with <Icon class="material-icons">favorite</Icon>by Fran Martín</Label>
             </Button>
             <div class="sidebar-toggle rounded-rect left" on:click={toggleSidebar}>
