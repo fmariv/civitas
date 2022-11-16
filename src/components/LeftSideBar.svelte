@@ -1,5 +1,16 @@
+<svelte:head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/svelte-material-ui@4.0.0/bare.min.css" />
+    
+    <!-- Material Icons -->
+    <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+</svelte:head>
+
 <script>
     import { onMount, getContext } from 'svelte';
+    import Button, { Label, Icon } from '@smui/button';
     import 'maplibre-gl/dist/maplibre-gl.css';
 
     function toggleSidebar() {
@@ -32,16 +43,19 @@
   
     <div id="left" class="sidebar flex-center left collapsed">
         <div class="sidebar-content rounded-rect flex-center">
-            <button id="fly-button">
-                Give me a city!
-            </button>
+            <Button id="fly-button" touch variant="outlined">
+                <Label>Give me a city!</Label>
+            </Button>
+            <!-- Make as typography -->
+            <Button>
+                <Label>Made with <Icon class="material-icons">favorite</Icon>by Fran Martín</Label>
+            </Button>
             <div class="sidebar-toggle rounded-rect left" on:click={toggleSidebar}>
                 &rarr;
             </div>
         </div>
     </div>
-  <!-- https://maplibre.org/maplibre-gl-js-docs/example/flyto/ -->
-  <!-- https://maplibre.org/maplibre-gl-js-docs/example/offset-vanishing-point-with-padding/ -->
+
   <style>
         .rounded-rect {
             background: white;

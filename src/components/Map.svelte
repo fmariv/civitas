@@ -4,23 +4,44 @@
   import axios from 'axios';
   import 'maplibre-gl/dist/maplibre-gl.css';
 
+  const { env } = _process;
+  const maptilerApiKey = env.API_KEY;
+  const rapidapiApiKey = env.RAPIDAPI_KEY;   // TODO not working
+
   let map;
   let container;
+  let cityName = '';   // TODO store
 
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
 
   async function getTotalCitiesCount() {
-    const response = await axios.get('http://geodb-free-service.wirefreethought.com/v1/geo/cities?hateoasMode=off')
+    const options = {
+      method: 'GET',
+      url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities',
+      headers: {
+        'X-RapidAPI-Key': rapidapiApiKey,
+        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
+      }
+    };
+    const response = await axios.request(options)
     
-    return response.data.metadata.totalCount - 1
+    return response.metadata.totalCount - 1
   }
 
   async function getNewCity(randomCity) {
-    const response = await axios.get(`http://geodb-free-service.wirefreethought.com/v1/geo/cities?limit=1&offset=${randomCity}&hateoasMode=off`)
+    const options = {
+      method: 'GET',
+      url: `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?offset=${randomCity}&limit=1`,
+      headers: {
+        'X-RapidAPI-Key': rapidapiApiKey,
+        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
+      }
+    };
+    const response = await axios.request(options)
 
-    return response.data.data[0]
+    return response.data
   }
 
   async function getNewCityData() {
@@ -32,14 +53,18 @@
 
   async function flyToNewCity() {
     let city = await getNewCityData()
-    let cityName = city.name;
+    cityName = city.name;   // TODO store
     let cityLat = city.latitude;
     let cityLong = city.longitude;
     
+    fly(cityLat, cityLong)
+  }
+
+  function fly(lat, long) {
     map.flyTo({
         center: [
-          cityLong,
-          cityLat
+          long,
+          lat
         ],
         zoom: 13,
         bearing: 0,
@@ -50,14 +75,17 @@
         },
         essential: true
     });
-    
   }
 
   onMount(async() => {
+
+    if (!maptilerApiKey) {
+      throw new Error("You need to configure env API_KEY first!");
+    }
     
     map = new Map({
         container: container,
-        style: 'https://api.maptiler.com/maps/streets/style.json?key=hD7P9qjaQIIuR4Ct1buL',
+        style: `https://api.maptiler.com/maps/streets/style.json?key=${maptilerApiKey}`,
         zoom: 13,
         maxZoom: 14,
         center: [-105.270546, 40.014984]
