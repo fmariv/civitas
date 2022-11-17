@@ -9,9 +9,19 @@
 </svelte:head>
 
 <script>
-    import { onMount, getContext } from 'svelte';
+    import { onMount } from 'svelte';
+    import { fade } from 'svelte/transition';
     import Button, { Label, Icon } from '@smui/button';
+    import { cityNameStore } from '../stores';
     import 'maplibre-gl/dist/maplibre-gl.css';
+
+    let cityName;
+
+    function subscribeCityName() {
+        cityNameStore.subscribe(value => {
+            cityName = value
+        })
+    }
 
     function openMyWebPage() {
         window.open('http://www.franmartin.es/')
@@ -40,7 +50,8 @@
     }
 
     onMount(async() => {
-        toggleSidebar()
+        toggleSidebar();
+        subscribeCityName();
     });
 
   </script>
@@ -50,10 +61,17 @@
             <Button id="fly-button" touch variant="outlined">
                 <Label>Give me a city!</Label>
             </Button>
+            {#key cityName}
+                {#if cityName}
+                    <p in:fade>{ cityName }</p>
+                {/if}
+            {/key}
             <!-- Make as typography -->
-            <Button on:click={openMyWebPage}>
-                <Label>Made with <Icon class="material-icons">favorite</Icon>by Fran Martín</Label>
-            </Button>
+            <div class="made-by-fm">
+                <Button on:click={openMyWebPage}>
+                    <Label>Made with <Icon class="material-icons">favorite</Icon>by Fran Martín</Label>
+                </Button>
+            </div>
             <div class="sidebar-toggle rounded-rect left" on:click={toggleSidebar}>
                 &rarr;
             </div>
@@ -70,6 +88,7 @@
         .flex-center {
             position: absolute;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
@@ -110,7 +129,12 @@
             transition: transform 1s;
             z-index: 1;
             width: 300px;
-            height: 100%;
+            height: 50%;
+            top: 25%;
+        }
+
+        .made-by-fm {
+            bottom: 0;
         }
         
         /*

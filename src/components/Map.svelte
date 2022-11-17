@@ -3,6 +3,7 @@
   import { Map } from 'maplibre-gl';
   import axios from 'axios';
   import { citiesTotalCountStore, cityNameStore } from '../stores';
+  import { wait, getRandomInt } from '../utils';
   import 'maplibre-gl/dist/maplibre-gl.css';
 
   const { env } = _process;
@@ -12,16 +13,6 @@
   let map;
   let container;
   let citiesTotalCount;
-
-  function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-  }
-
-  function wait(milliseconds){
-    return new Promise(resolve => {
-        setTimeout(resolve, milliseconds);
-    });
-  }
 
   function subscribeCitiesTotalCount() {
     citiesTotalCountStore.subscribe(value => {
