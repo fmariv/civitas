@@ -69,7 +69,7 @@
     let cityLat = city.latitude;
     let cityLong = city.longitude;
     
-    fly(cityLat, cityLong)
+    fly(cityLat, cityLong);
   }
 
   function fly(lat, long) {

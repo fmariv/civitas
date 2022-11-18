@@ -58,14 +58,17 @@
   
     <div id="left" class="sidebar flex-center left collapsed">
         <div class="sidebar-content rounded-rect flex-center">
-            <Button id="fly-button" touch variant="outlined">
+            <img class="img-sidebar" src="civitas.png" alt="Civitas" />
+            <Button id="fly-button" touch variant="raised">
                 <Label>Give me a city!</Label>
             </Button>
-            {#key cityName}
-                {#if cityName}
-                    <p in:fade>{ cityName }</p>
-                {/if}
-            {/key}
+            <p in:fade>
+                {#key cityName}
+                    {#if cityName}
+                        { cityName }
+                    {/if}
+                {/key}
+            </p>
             <!-- Make as typography -->
             <div class="made-by-fm">
                 <Button on:click={openMyWebPage}>
@@ -79,6 +82,11 @@
     </div>
 
   <style>
+        /* Theme colors. */
+        :root {
+            --mdc-theme-primary: #3e4fc0;
+        }
+
         .rounded-rect {
             background: white;
             border-radius: 10px;
@@ -129,8 +137,12 @@
             transition: transform 1s;
             z-index: 1;
             width: 300px;
-            height: 50%;
-            top: 25%;
+            height: 100%;
+        }
+
+        .img-sidebar {
+            width: 85%;
+            height: 18%;
         }
 
         .made-by-fm {
