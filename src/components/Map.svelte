@@ -97,7 +97,7 @@
     
     map = new Map({
         container: container,
-        style: `https://api.maptiler.com/maps/streets/style.json?key=${maptilerApiKey}`,
+        style: `https://api.maptiler.com/maps/openstreetmap/style.json?key=${maptilerApiKey}`,
         zoom: 13,
         maxZoom: 14,
         center: [-105.270546, 40.014984]

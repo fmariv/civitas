@@ -144,7 +144,7 @@
         .img-sidebar {
             padding-bottom: 30%;
             width: 85%;
-            height: 20%;
+            height: 22%;
         }
 
         .made-by-fm {

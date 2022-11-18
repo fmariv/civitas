@@ -6,14 +6,22 @@
   <img src="public/civitas.png" alt="Civitas" width="300" />
 </p>
 
-Civitas is a web map application that lets you know new cities by flying all around the globe.
+Civitas is a web map application that lets you know new random cities by flying all around the globe.
+
+Let's start visiting new cities [here](https://civitas.franmartin.es/)!
 
 ## Build With
 
-* [Svelte](https://svelte.dev/)
-* [MapLibre GL JS](https://maplibre.org/)
+* :computer: [Svelte](https://svelte.dev/)
+* :globe_with_meridians: [MapLibre GL JS](https://maplibre.org/)
+* :art: [MapTiler](https://www.maptiler.com/)
+* :satellite: [Vercel](https://vercel.com/)
 
 This project was generated with ```npx degit maptiler/svelte-template-maplibre-gl-js```
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Credits
 
