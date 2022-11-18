@@ -142,11 +142,13 @@
         }
 
         .img-sidebar {
+            padding-bottom: 30%;
             width: 85%;
-            height: 18%;
+            height: 20%;
         }
 
         .made-by-fm {
+            padding-top: 30%;
             bottom: 0;
         }
 
