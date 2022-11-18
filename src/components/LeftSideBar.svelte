@@ -1,7 +1,7 @@
 <svelte:head>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/svelte-material-ui@4.0.0/bare.min.css" />
     
-    <!-- Material Icons -->
+    <!-- Material Icons and fonts -->
     <link
     rel="stylesheet"
     href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -62,7 +62,7 @@
             <Button id="fly-button" touch variant="raised">
                 <Label>Give me a city!</Label>
             </Button>
-            <p in:fade>
+            <p class="city-name" in:fade>
                 {#key cityName}
                     {#if cityName}
                         { cityName }
@@ -136,8 +136,9 @@
         .sidebar {
             transition: transform 1s;
             z-index: 1;
-            width: 300px;
-            height: 100%;
+            width: 325px;
+            height: 75%;
+            top: 12.5%;
         }
 
         .img-sidebar {
@@ -148,13 +149,19 @@
         .made-by-fm {
             bottom: 0;
         }
+
+        .city-name {
+            color: #ed892f;
+            font-size: 70%;
+            justify-content: center;
+        }
         
         /*
         The sidebar styling has them "expanded" by default, we use CSS transforms to push them offscreen
         The toggleSidebar() function removes this class from the element in order to expand it.
         */
         .left.collapsed {
-            transform: translateX(-295px);
+            transform: translateX(-320px);
         }
   </style>
   
