@@ -77,6 +77,8 @@
             {#key cityName}
                 {#if cityName}
                 <p class="city-name" in:fade>{ cityName }</p>
+                {:else}
+                <p class="city-name" in:fade>Waiting for a new place...</p>
                 {/if}
             {/key}
             <div class="made-by-fm">
@@ -171,6 +173,7 @@
             color: #ed892f;
             font-size: 60%;
             text-align: center;
+            max-height: 75%;
         }
         
         /*
