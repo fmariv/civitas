@@ -1,4 +1,5 @@
 <svelte:head>
+    <!-- -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/svelte-material-ui@4.0.0/bare.min.css" />
     
     <!-- Material Icons and fonts -->
@@ -12,8 +13,7 @@
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
     import Button, { Label, Icon } from '@smui/button';
-    import Dialog, { Title, Content, Actions } from '@smui/dialog';
-    import Fab from '@smui/fab';
+    import Dialog, { Content, Actions } from '@smui/dialog';
     import { cityNameStore } from '../stores';
     import 'maplibre-gl/dist/maplibre-gl.css';
 
@@ -65,10 +65,13 @@
   
     <div id="left" class="sidebar flex-center left collapsed">
         <div class="sidebar-content rounded-rect flex-center">
-            <Button on:click={() => (open = true)}>
-                <Label>What can I do? <Icon class="material-icons">help</Icon></Label>
+            <Button on:click={openMyGitHub}>
+                <Label style="font-size: 200%; font-weight: bold">Civitas <Icon class="material-icons">logo_dev</Icon></Label>
             </Button>
-            <Button id="fly-button" touch variant="raised">
+            <Button on:click={() => (open = true)}>
+                <Label>What can I do <Icon class="material-icons">help</Icon></Label>
+            </Button>
+            <Button style="margin-top: 7%" id="fly-button" touch variant="raised">
                 <Label>Give me a city!</Label>
             </Button>
             {#key cityName}
@@ -76,19 +79,12 @@
                 <p class="city-name" in:fade>{ cityName }</p>
                 {/if}
             {/key}
-            <div class="flexy">
-                <div class="margins">
-                  <Fab color="primary" on:click={openMyGitHub} mini>
-                    <Icon class="material-icons">logo_dev</Icon>
-                  </Fab>
-                </div>
-              </div>
             <div class="made-by-fm">
                 <Button on:click={openMyWebPage}>
-                    <Label>Made with <Icon class="material-icons">favorite</Icon>by Fran Martín</Label>
+                    <Label style="font-size: 85%">Made with <Icon class="material-icons">favorite</Icon>by Fran Martín</Label>
                 </Button>
             </div>
-            <div class="sidebar-toggle rounded-rect left arrow" on:click={toggleSidebar}>
+            <div class="sidebar-toggle rounded-rect left" on:click={toggleSidebar}>
                 &rarr;
             </div>
         </div>
@@ -99,7 +95,7 @@
         aria-labelledby="simple-title"
         aria-describedby="simple-content"
     >
-    <Content id="simple-content">Civitas is a web map application that allows you to visit new cities and places by flying randomly all around the globe.</Content>
+    <Content id="simple-content">Civitas allows you to visit new cities and places by flying randomly all around the globe.</Content>
     <Actions>
         <Button>
             <Label>Got it!</Label>
@@ -111,11 +107,6 @@
         /* Theme colors. */
         :root {
             --mdc-theme-primary: #3e4fc0;
-        }
-
-        .arrow {
-            justify-content: center;
-            align-items: center;
         }
 
         .rounded-rect {
@@ -168,25 +159,18 @@
             transition: transform 1s;
             z-index: 1;
             width: 325px;
-            height: 75%;
-            top: 12.5%;
-        }
-
-        .img-sidebar {
-            padding-bottom: 30%;
-            width: 85%;
-            height: 22%;
+            height: 55%;
+            top: 22.5%;
         }
 
         .made-by-fm {
-            padding-top: 30%;
-            bottom: 0;
+            padding-top: 20%;
         }
 
         .city-name {
             color: #ed892f;
-            font-size: 70%;
-            justify-content: center;
+            font-size: 60%;
+            text-align: center;
         }
         
         /*

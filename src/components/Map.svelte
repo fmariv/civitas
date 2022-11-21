@@ -30,15 +30,12 @@
       }
     };
     const response = await axios.request(options)
-    // TODO put the wait function here and block the button 
-    // with a store
-    //  await wait(1500);   // Wait 1,5 seconds to avoid restrictions by RapidAPI requests
 
     citiesTotalCountStore.set(response.data.metadata.totalCount - 1)
   }
 
   async function getNewCity(randomCity) {
-    await wait(1500);   // Wait 1,5 seconds to avoid restrictions by RapidAPI requests
+    await wait(1200);   // Wait 1,2 seconds to avoid restrictions by RapidAPI requests
     const options = {
       method: 'GET',
       url: `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?offset=${randomCity}&limit=1`,
@@ -64,7 +61,7 @@
 
   async function flyToNewCity() {
     let city = await getNewCityData()
-    let cityName = city.name;
+    let cityName = `${city.name}, ${city.country}`;
     cityNameStore.set(cityName);
     let cityLat = city.latitude;
     let cityLong = city.longitude;
@@ -116,9 +113,9 @@
 
 <div id="map" bind:this={container}></div>
 <style>
-#map {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
+  #map {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
 </style>
