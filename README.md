@@ -6,7 +6,7 @@
   <img src="public/civitas.png" alt="Civitas" width="300" />
 </p>
 
-Civitas is a web map application that lets you know new random cities by flying all around the globe.
+Civitas is a web map application that allows you to visit new cities and places by flying randomly all around the globe.
 
 Let's start visiting new cities [here](https://civitas.franmartin.es/)!
 

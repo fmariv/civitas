@@ -99,7 +99,7 @@
         aria-labelledby="simple-title"
         aria-describedby="simple-content"
     >
-    <Content id="simple-content">Civitas is a web map application that flies around the world to a new random city every time, allowing you to know new cities.</Content>
+    <Content id="simple-content">Civitas is a web map application that allows you to visit new cities and places by flying randomly all around the globe.</Content>
     <Actions>
         <Button>
             <Label>Got it!</Label>
