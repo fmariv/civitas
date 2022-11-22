@@ -1,7 +1,7 @@
 <svelte:head>
     <!-- -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/svelte-material-ui@4.0.0/bare.min.css" />
-    
+
     <!-- Material Icons and fonts -->
     <link
     rel="stylesheet"
@@ -21,48 +21,48 @@
     let open = false;
 
     function subscribeCityName() {
-        cityNameStore.subscribe(value => {
-            cityName = value
-        })
+      cityNameStore.subscribe((value) => {
+        cityName = value;
+      });
     }
 
     function openMyWebPage() {
-        window.open('http://www.franmartin.es/')
+      window.open('http://www.franmartin.es/');
     }
 
     function openMyGitHub() {
-        window.open('https://github.com/fmariv/civitas')
+      window.open('https://github.com/fmariv/civitas');
     }
 
     function toggleSidebar() {
-        var elem = document.getElementById('left');
-        var classes = elem.className.split(' ');
-        var collapsed = classes.indexOf('collapsed') !== -1;
-        
-        var padding = {};
-        
-        if (collapsed) {
-            // Remove the 'collapsed' class from the class list of the element, this sets it back to the expanded state.
-            classes.splice(classes.indexOf('collapsed'), 1);
-            
-            padding['left'] = 300; // In px, matches the width of the sidebars set in .sidebar CSS class
-        } else {
-            padding['left'] = 0;
-            // Add the 'collapsed' class to the class list of the element
-            classes.push('collapsed');
-        }
-        
-        // Update the class list on the element
-        elem.className = classes.join(' ');
+      const elem = document.getElementById('left');
+      const classes = elem.className.split(' ');
+      const collapsed = classes.indexOf('collapsed') !== -1;
+
+      const padding = {};
+
+      if (collapsed) {
+        // Remove the 'collapsed' class from the class list of the element, this sets it back to the expanded state.
+        classes.splice(classes.indexOf('collapsed'), 1);
+
+        padding.left = 300; // In px, matches the width of the sidebars set in .sidebar CSS class
+      } else {
+        padding.left = 0;
+        // Add the 'collapsed' class to the class list of the element
+        classes.push('collapsed');
+      }
+
+      // Update the class list on the element
+      elem.className = classes.join(' ');
     }
 
-    onMount(async() => {
-        toggleSidebar();
-        subscribeCityName();
+    onMount(async () => {
+      toggleSidebar();
+      subscribeCityName();
     });
 
   </script>
-  
+
     <div id="left" class="sidebar flex-center left collapsed">
         <div class="sidebar-content rounded-rect flex-center">
             <Button on:click={openMyGitHub}>
@@ -116,7 +116,7 @@
             border-radius: 10px;
             box-shadow: 0 0 50px -25px black;
         }
-        
+
         .flex-center {
             position: absolute;
             display: flex;
@@ -124,7 +124,7 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         .flex-center.left {
             left: 0px;
         }
@@ -137,7 +137,7 @@
             font-size: 32px;
             color: gray;
         }
-        
+
         .sidebar-toggle {
             position: absolute;
             width: 1.3em;
@@ -147,16 +147,16 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         .sidebar-toggle.left {
             right: -1.5em;
         }
-        
+
         .sidebar-toggle:hover {
             color: #0aa1cf;
             cursor: pointer;
         }
-        
+
         .sidebar {
             transition: transform 1s;
             z-index: 1;
@@ -175,7 +175,7 @@
             text-align: center;
             max-height: 75%;
         }
-        
+
         /*
         The sidebar styling has them "expanded" by default, we use CSS transforms to push them offscreen
         The toggleSidebar() function removes this class from the element in order to expand it.
@@ -184,4 +184,3 @@
             transform: translateX(-320px);
         }
   </style>
-  
