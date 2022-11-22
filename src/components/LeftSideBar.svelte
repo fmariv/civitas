@@ -1,6 +1,7 @@
 <svelte:head>
-    <!-- -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/svelte-material-ui@4.0.0/bare.min.css" />
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/svelte-material-ui@4.0.0/bare.min.css"
+    />
 
     <!-- Material Icons and fonts -->
     <link
@@ -66,7 +67,9 @@
     <div id="left" class="sidebar flex-center left collapsed">
         <div class="sidebar-content rounded-rect flex-center">
             <Button on:click={openMyGitHub}>
-                <Label style="font-size: 200%; font-weight: bold">Civitas <Icon class="material-icons">logo_dev</Icon></Label>
+                <Label style="font-size: 200%; font-weight: bold">
+                    Civitas <Icon class="material-icons">logo_dev</Icon>
+                </Label>
             </Button>
             <Button on:click={() => (open = true)}>
                 <Label>What can I do <Icon class="material-icons">help</Icon></Label>
@@ -83,7 +86,9 @@
             {/key}
             <div class="made-by-fm">
                 <Button on:click={openMyWebPage}>
-                    <Label style="font-size: 85%">Made with <Icon class="material-icons">favorite</Icon>by Fran Martín</Label>
+                    <Label style="font-size: 85%">
+                        Made with <Icon class="material-icons">favorite</Icon>by Fran Martín
+                    </Label>
                 </Button>
             </div>
             <div class="sidebar-toggle rounded-rect left" on:click={toggleSidebar}>
@@ -97,7 +102,9 @@
         aria-labelledby="simple-title"
         aria-describedby="simple-content"
     >
-    <Content id="simple-content">Civitas allows you to visit new cities and places by flying randomly all around the globe.</Content>
+    <Content id="simple-content">
+        Civitas allows you to visit new cities and places by flying randomly all around the globe.
+    </Content>
     <Actions>
         <Button>
             <Label>Got it!</Label>
