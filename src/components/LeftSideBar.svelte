@@ -1,6 +1,6 @@
 <svelte:head>
     <!-- -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/svelte-material-ui@4.0.0/bare.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/svelte-material-ui@4.0.0/bare.min.css" />
     
     <!-- Material Icons and fonts -->
     <link
