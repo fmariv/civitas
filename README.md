@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <p align="center">
-  <img src="public/civitas.png" alt="Civitas" width="375" />
+  <img src="assets/city.svg" alt="Civitas" width="300" />
 </p>
 
 Civitas is a web map application that allows you to visit new cities and places by flying smoothly and randomly all around the globe.

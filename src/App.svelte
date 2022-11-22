@@ -1,7 +1,7 @@
 <script>
     import Map from './components/Map.svelte';
-    import LeftSideBar from './components/LeftSideBar.svelte';
+    import Content from './components/Content.svelte';
 </script>
 
-<LeftSideBar />
+<Content />
 <Map />

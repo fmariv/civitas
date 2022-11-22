@@ -15,11 +15,13 @@
     import { fade } from 'svelte/transition';
     import Button, { Label, Icon } from '@smui/button';
     import Dialog, { Content, Actions } from '@smui/dialog';
+    import { RingLoader } from 'svelte-loading-spinners';
     import { cityNameStore } from '../stores';
     import 'maplibre-gl/dist/maplibre-gl.css';
 
     let cityName;
     let open = false;
+    let shown = false;
 
     function subscribeCityName() {
       cityNameStore.subscribe((value) => {
@@ -84,6 +86,7 @@
                 <p class="city-name" in:fade>Waiting for a new place...</p>
                 {/if}
             {/key}
+            <!-- <RingLoader size="40" color="#ed892f" unit="px" duration="1.5s" /> -->
             <div class="made-by-fm">
                 <Button on:click={openMyWebPage}>
                     <Label style="font-size: 85%">
