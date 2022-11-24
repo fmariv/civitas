@@ -105,7 +105,7 @@
                 {/if}
             {/key}
             <div id="loader">
-                <RingLoader size="40" color="#ed892f" unit="px" duration="1.5s" />
+                <RingLoader size="30" color="#ed892f" unit="px" duration="1.5s" />
             </div>
             <div class="footer">
                 <Button on:click={openMyWebPage}>
