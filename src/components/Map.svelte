@@ -3,7 +3,7 @@
   import { Map } from 'maplibre-gl';
   import axios from 'axios';
   import { citiesTotalCountStore, cityNameStore } from '../stores';
-  import { wait, getRandomInt } from '../utils';
+  import { wait, getRandomInt, showElement, hideElement } from '../utils';
   import 'maplibre-gl/dist/maplibre-gl.css';
 
   const { env } = _process;
@@ -77,12 +77,21 @@
   }
 
   async function flyToNewCity() {
+    // Show loading display
+    showElement('loader')
+    cityNameStore.set('Looking for a new place...');
+
+    // Get new city data
     const city = await getNewCityData();
     const cityName = `${city.name}, ${city.country}`;
     cityNameStore.set(cityName);
+
+    // Hide loading display
+    hideElement('loader')
+
+    // Get new city position and fly there
     const cityLat = city.latitude;
     const cityLong = city.longitude;
-
     fly(cityLat, cityLong);
   }
 

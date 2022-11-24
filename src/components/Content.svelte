@@ -86,7 +86,9 @@
                 <p class="city-name" in:fade>Waiting for a new place...</p>
                 {/if}
             {/key}
-            <!-- <RingLoader size="40" color="#ed892f" unit="px" duration="1.5s" /> -->
+            <div id="loader">
+                <RingLoader size="40" color="#ed892f" unit="px" duration="1.5s" />
+            </div>
             <div class="made-by-fm">
                 <Button on:click={openMyWebPage}>
                     <Label style="font-size: 85%">
@@ -173,6 +175,10 @@
             width: 325px;
             height: 55%;
             top: 22.5%;
+        }
+
+        #loader {
+            visibility: hidden;
         }
 
         .made-by-fm {

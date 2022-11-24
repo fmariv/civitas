@@ -7,3 +7,11 @@ export function wait(milliseconds) {
     setTimeout(resolve, milliseconds);
   });
 }
+
+export function showElement(id) {
+  document.getElementById(id).style.visibility = "visible";
+}
+
+export function hideElement(id) {
+  document.getElementById(id).style.visibility = "hidden";
+}
