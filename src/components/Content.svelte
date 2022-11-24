@@ -21,22 +21,40 @@
 
     let cityName;
     let open = false;
-    let shown = false;
 
+    /**
+     * Subscribe the city name to the city name store
+     */
     function subscribeCityName() {
       cityNameStore.subscribe((value) => {
         cityName = value;
       });
     }
 
+    /**
+     * Open my personal webpage
+     */
     function openMyWebPage() {
       window.open('http://www.franmartin.es/');
     }
 
+    /**
+     * Open the GitHub repository of Civitas
+     */
     function openMyGitHub() {
       window.open('https://github.com/fmariv/civitas');
     }
 
+    /**
+     * Open the help dialog
+     */
+    function openDialog() {
+      open = true;
+    }
+
+    /**
+     * Show or hide the content sidebar
+     */
     function toggleSidebar() {
       const elem = document.getElementById('left');
       const classes = elem.className.split(' ');
@@ -73,7 +91,7 @@
                     Civitas <Icon class="material-icons">logo_dev</Icon>
                 </Label>
             </Button>
-            <Button on:click={() => (open = true)}>
+            <Button on:click={openDialog}>
                 <Label>What can I do <Icon class="material-icons">help</Icon></Label>
             </Button>
             <Button style="margin-top: 7%" id="fly-button" touch variant="raised">
@@ -87,15 +105,16 @@
                 {/if}
             {/key}
             <div id="loader">
-                <RingLoader size="40" color="#ed892f" unit="px" duration="1.5s" />
+                <RingLoader size="60" color="#ed892f" unit="px" duration="1.5s" />
             </div>
-            <div class="made-by-fm">
+            <div class="footer">
                 <Button on:click={openMyWebPage}>
                     <Label style="font-size: 85%">
                         Made with <Icon class="material-icons">favorite</Icon>by Fran Martín
                     </Label>
                 </Button>
             </div>
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div class="sidebar-toggle rounded-rect left" on:click={toggleSidebar}>
                 &rarr;
             </div>
@@ -108,7 +127,8 @@
         aria-describedby="simple-content"
     >
     <Content id="simple-content">
-        Civitas allows you to visit new cities and places by flying randomly all around the globe.
+        Civitas allows you to visit new cities and places by flying
+        randomly all around the globe.
     </Content>
     <Actions>
         <Button>
@@ -181,7 +201,7 @@
             visibility: hidden;
         }
 
-        .made-by-fm {
+        .footer {
             padding-top: 20%;
         }
 
@@ -189,12 +209,15 @@
             color: #ed892f;
             font-size: 60%;
             text-align: center;
-            max-height: 75%;
+            text-overflow: ellipsis;
+            max-width: 75%;
         }
 
         /*
-        The sidebar styling has them "expanded" by default, we use CSS transforms to push them offscreen
-        The toggleSidebar() function removes this class from the element in order to expand it.
+        The sidebar styling has them "expanded" by default,
+        we use CSS transforms to push them offscreen.
+        The toggleSidebar() function removes this class
+        from the element in order to expand it.
         */
         .left.collapsed {
             transform: translateX(-320px);

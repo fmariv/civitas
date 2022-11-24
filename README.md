@@ -16,6 +16,7 @@ Let's start visiting new cities [here](https://civitas.franmartin.es/)!
 * :globe_with_meridians: [MapLibre GL JS](https://maplibre.org/)
 * :art: [MapTiler](https://www.maptiler.com/)
 * :satellite: [Vercel](https://vercel.com/)
+* :european_castle: [GeoDB Cities](https://rapidapi.com/wirefreethought/api/geodb-cities)
 
 This project was generated with ```npx degit maptiler/svelte-template-maplibre-gl-js```
 

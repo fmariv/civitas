@@ -3,9 +3,12 @@
   import { Map } from 'maplibre-gl';
   import axios from 'axios';
   import { citiesTotalCountStore, cityNameStore } from '../stores';
-  import { wait, getRandomInt, showElement, hideElement } from '../utils';
+  import {
+    wait, getRandomInt, showElement, hideElement,
+  } from '../utils';
   import 'maplibre-gl/dist/maplibre-gl.css';
 
+  // eslint-disable-next-line no-undef
   const { env } = _process;
   const maptilerApiKey = env.MAPTILER_KEY;
   const rapidapiApiKey = env.RAPIDAPI_KEY;
@@ -13,13 +16,21 @@
   let map;
   let container;
   let citiesTotalCount;
+  let searchingAndFlyng = false;
 
+  /**
+   * Subscribe the cities count in the cities count store
+   */
   function subscribeCitiesTotalCount() {
     citiesTotalCountStore.subscribe((value) => {
       citiesTotalCount = value;
     });
   }
 
+  /**
+   * Get the total count of cities in the GeoDBD Cities API,
+   * in order to get a random city from it
+   */
   async function getCitiesTotalCount() {
     const options = {
       method: 'GET',
@@ -31,9 +42,18 @@
     };
     const response = await axios.request(options);
 
-    citiesTotalCountStore.set(response.data.metadata.totalCount - 1);
+    try {
+      const totalCount = response.data.metadata.totalCount - 1;
+      citiesTotalCountStore.set(totalCount);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
+  /**
+   * Get a new random city from the GeoDB Citis API
+   * @param randomCity id number of the new city
+   */
   async function getNewCity(randomCity) {
     await wait(1200); // Wait 1,2 seconds to avoid restrictions by RapidAPI requests
     const options = {
@@ -46,19 +66,41 @@
     };
     const response = await axios.request(options);
 
-    return response.data.data[0];
+    try {
+      const data = response.data.data[0];
+      return data;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
   }
 
+  /**
+   * Get the data from the new random city
+   */
   async function getNewCityData() {
     if (!citiesTotalCount) {
       await getCitiesTotalCount();
       subscribeCitiesTotalCount();
     }
     const randomCity = getRandomInt(citiesTotalCount);
-
-    return await getNewCity(randomCity);
+    if (!randomCity) {
+      console.error('It seems that we can not get a new city...');
+      return false;
+    }
+    const newCityData = await getNewCity(randomCity);
+    if (!newCityData) {
+      console.error('It seems that we can not get the data from the new city...');
+      return false;
+    }
+    return newCityData;
   }
 
+  /**
+   * Fly to the new city
+   * @param lat Latitude of the new city
+   * @param long Longitude of the new city
+   */
   function fly(lat, long) {
     map.flyTo({
       center: [
@@ -76,23 +118,40 @@
     });
   }
 
+  /**
+   * Get a new city location from the API and
+   * fly there
+   */
   async function flyToNewCity() {
+    if (searchingAndFlyng) {
+      // This variable implies that the user can not
+      // make multiple request in a short period of time
+      // and before one search and fly has ended,
+      // avoiding time limitations by RapidAPI
+      return;
+    }
+    searchingAndFlyng = true;
     // Show loading display
-    showElement('loader')
+    showElement('loader');
     cityNameStore.set('Looking for a new place...');
 
     // Get new city data
     const city = await getNewCityData();
+    // Check we got the city data. If not, stop
+    if (!city) {
+      return;
+    }
     const cityName = `${city.name}, ${city.country}`;
+    const cityLat = city.latitude;
+    const cityLong = city.longitude;
     cityNameStore.set(cityName);
 
     // Hide loading display
-    hideElement('loader')
+    hideElement('loader');
 
-    // Get new city position and fly there
-    const cityLat = city.latitude;
-    const cityLong = city.longitude;
+    // Fly to the new location
     fly(cityLat, cityLong);
+    searchingAndFlyng = false;
   }
 
   onMount(async () => {
