@@ -105,7 +105,7 @@
                 {/if}
             {/key}
             <div id="loader">
-                <RingLoader size="60" color="#ed892f" unit="px" duration="1.5s" />
+                <RingLoader size="40" color="#ed892f" unit="px" duration="1.5s" />
             </div>
             <div class="footer">
                 <Button on:click={openMyWebPage}>
@@ -127,8 +127,13 @@
         aria-describedby="simple-content"
     >
     <Content id="simple-content">
+        <Icon class="material-icons">info</Icon>
         Civitas allows you to visit new cities and places by flying
         randomly all around the globe.
+        <br><br>
+        <Icon class="material-icons">lightbulb</Icon>
+        Tip: the more you fly, the smoother the experience will be,
+        as the vector tiles from the basemap will store in cache.
     </Content>
     <Actions>
         <Button>
