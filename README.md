@@ -8,6 +8,8 @@ Civitas is a web map application that allows you to visit new cities and places 
 
 Let's start visiting new cities [here](https://civitas.franmartin.es/)!
 
+:warning: Important! Civitas is not optimized for mobile devices yet, so if you check it with your phone the experience could not be as expected. 
+
 ## Build With
 
 * :computer: [Svelte](https://svelte.dev/)
